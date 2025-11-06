@@ -14,6 +14,7 @@ import { Route as VerifyOtpRouteImport } from './routes/verify-otp'
 import { Route as GetStartedRouteImport } from './routes/get-started'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WebFormsDashboardRouteImport } from './routes/web-forms/dashboard'
 
 const WorkflowsRoute = WorkflowsRouteImport.update({
   id: '/workflows',
@@ -40,6 +41,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WebFormsDashboardRoute = WebFormsDashboardRouteImport.update({
+  id: '/web-forms/dashboard',
+  path: '/web-forms/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/get-started': typeof GetStartedRoute
   '/verify-otp': typeof VerifyOtpRoute
   '/workflows': typeof WorkflowsRoute
+  '/web-forms/dashboard': typeof WebFormsDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/get-started': typeof GetStartedRoute
   '/verify-otp': typeof VerifyOtpRoute
   '/workflows': typeof WorkflowsRoute
+  '/web-forms/dashboard': typeof WebFormsDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,12 +70,25 @@ export interface FileRoutesById {
   '/get-started': typeof GetStartedRoute
   '/verify-otp': typeof VerifyOtpRoute
   '/workflows': typeof WorkflowsRoute
+  '/web-forms/dashboard': typeof WebFormsDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/get-started' | '/verify-otp' | '/workflows'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/get-started'
+    | '/verify-otp'
+    | '/workflows'
+    | '/web-forms/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/get-started' | '/verify-otp' | '/workflows'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/get-started'
+    | '/verify-otp'
+    | '/workflows'
+    | '/web-forms/dashboard'
   id:
     | '__root__'
     | '/'
@@ -75,6 +96,7 @@ export interface FileRouteTypes {
     | '/get-started'
     | '/verify-otp'
     | '/workflows'
+    | '/web-forms/dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -83,6 +105,7 @@ export interface RootRouteChildren {
   GetStartedRoute: typeof GetStartedRoute
   VerifyOtpRoute: typeof VerifyOtpRoute
   WorkflowsRoute: typeof WorkflowsRoute
+  WebFormsDashboardRoute: typeof WebFormsDashboardRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/web-forms/dashboard': {
+      id: '/web-forms/dashboard'
+      path: '/web-forms/dashboard'
+      fullPath: '/web-forms/dashboard'
+      preLoaderRoute: typeof WebFormsDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -131,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   GetStartedRoute: GetStartedRoute,
   VerifyOtpRoute: VerifyOtpRoute,
   WorkflowsRoute: WorkflowsRoute,
+  WebFormsDashboardRoute: WebFormsDashboardRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

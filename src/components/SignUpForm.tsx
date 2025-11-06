@@ -34,7 +34,8 @@ import countryList from 'react-select-country-list';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { Route as otpRoute} from '../routes/verify-otp.tsx';
-import { useRouter } from '@tanstack/react-router'
+import { useRouter } from '@tanstack/react-router';
+import { checkSubDomainAvailability } from '@/core/api';
 
 
 import './SignUpForm.scss';
@@ -87,6 +88,19 @@ const SignUpForm = () => {
     ])
     
     if (!isStepValid) return
+
+    const subDomain = form.watch("subDomain");
+    const isSubDomainAvailable = await checkSubDomainAvailability(subDomain);
+    const isAvailable = isSubDomainAvailable.available;
+
+    if(!isAvailable) {
+      form.setError("subDomain", {
+        type: "manual",
+        message: "The workspace is already taken. Please try a new one."
+      })
+      return
+    }
+    
     
     // Check if passwords match
     const { password, confirmPassword } = form.getValues()
@@ -104,10 +118,7 @@ const SignUpForm = () => {
   const onPrevClick = () => {
     setFormGroup(formGroup - 1);
   }
-  const phone = form.watch("phone");
-  useEffect(() => {
-    if (phone) console.log("Phone:", phone); // E.164 like +97798xxxxxxx
-  }, [phone]);
+
   return (
     <div className="SignUpForm">
       <Form {...form} >
@@ -233,7 +244,7 @@ const SignUpForm = () => {
                         <FormControl>
                           <div className="subdomain">
                             <Input placeholder="subdomain" {...field} className="subdomain-input" />
-                            <h1>.product.com</h1>
+                            <h1>.swata-tech.com</h1>
                           </div>
                         </FormControl>
                         <FormMessage />

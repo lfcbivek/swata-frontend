@@ -1,4 +1,4 @@
-import { Atom, Detective, Bank, Briefcase, CaretDown, Aperture, Users, Island, HandWaving, Table } from "@phosphor-icons/react";
+import { Atom, Detective, Bank, Briefcase, CaretDown, Aperture, Users, Island, HandWaving, Table, Calendar, CaretDoubleUp, NewspaperClipping } from "@phosphor-icons/react";
 
 import {
   Sidebar,
@@ -13,8 +13,22 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  SidebarHeader
+  SidebarHeader,
+  SidebarFooter
 } from "@/components/ui/sidebar"
+
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem
+} from "@/components/ui/dropdown-menu"
+
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback
+} from "@/components/ui/avatar"
 
 import {
   Collapsible,
@@ -23,74 +37,86 @@ import {
 } from "@/components/ui/collapsible"
 
 import "./AppSidebar.scss";
+import { ROUTE_PATHS } from "@/constants/routePaths";
 
 // Menu items.
 const items = [
-  {
-    section: "Human Resource Module",
-    subSections: [
-      {
-        title: "HRMS",
-        url: "#",
-        icon: Briefcase,
-        children: [
-          {
-            title: "Employees",
-            url: "#",
-            icon: Detective,
-            children: []
-          },
-          {
-            title: "Job Posting",
-            url: "#",
-            icon: Bank,
-            children: []
-          },
-          {
-            title: "OnBoarding",
-            url: "#",
-            icon: Briefcase,
-            children: []
-          },
-          {
-            title: "OffBoarding",
-            url: "#",
-            icon: HandWaving,
-            children: []
-          },
-          {
-            title: "Org Chart",
-            url: "#",
-            icon: Users,
-            children: []
-          },
-          {
-            title: "Leave Management",
-            url: "#",
-            icon: Island,
-            children: []
-          },
+  // {
+  //   section: "Human Resource Module",
+  //   subSections: [
+  //     {
+  //       title: "HRMS",
+  //       url: "#",
+  //       icon: Briefcase,
+  //       children: [
+  //         {
+  //           title: "Employees",
+  //           url: "#",
+  //           icon: Detective,
+  //           children: []
+  //         },
+  //         {
+  //           title: "Job Posting",
+  //           url: "#",
+  //           icon: Bank,
+  //           children: []
+  //         },
+  //         {
+  //           title: "OnBoarding",
+  //           url: "#",
+  //           icon: Briefcase,
+  //           children: []
+  //         },
+  //         {
+  //           title: "OffBoarding",
+  //           url: "#",
+  //           icon: HandWaving,
+  //           children: []
+  //         },
+  //         {
+  //           title: "Org Chart",
+  //           url: "#",
+  //           icon: Users,
+  //           children: []
+  //         },
+  //         {
+  //           title: "Leave Management",
+  //           url: "#",
+  //           icon: Island,
+  //           children: []
+  //         },
+  //         {
+  //           title: "Calendar",
+  //           url: "#",
+  //           icon: Calendar,
+  //           children: []
+  //         },
+  //       ]
 
-        ]
 
-
-      },
+  //     },
       
-    ]
-  },
+  //   ]
+  // },
   {
-    section: "Forms",
+    section: "Web Forms",
     subSections: [
       {
         title: "Create Form",
-        url: "",
+        url: ROUTE_PATHS.WEB_FORMS.DASHBOARD,
         icon: Table,
+        children: []
+      },
+      {
+        title: "Newsletter",
+        url: "",
+        icon: NewspaperClipping,
         children: []
       }
     ]
   },
   {
-    section: "Custom Workflows",
+    section: "Automations",
     subSections: [
       {
         title: "Flows",
@@ -126,8 +152,8 @@ export default function AppSidebar() {
       collapsible="icon"
     >
       <SidebarHeader asChild>
-        <div className="flex items-center gap-2 px-2">
-          <img src="/test.png" alt="Logo" className="w-10 h-10 inline-block align-center" />
+        <div className="flex items-center gap-5 px-2">
+          <img src="/swata.svg" alt="Swata Logo" className="w-10 h-10 inline-block align-center" />
           <h1 className="font-semibold text-lg leading-tight">Swata</h1>
         </div>
       </SidebarHeader>
@@ -195,6 +221,41 @@ export default function AppSidebar() {
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <SidebarFooter>
+      <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton>
+                <Avatar className="rounded-lg">
+                  <AvatarImage
+                    src="https://github.com/evilrabbit.png"
+                    alt="@evilrabbit"
+                  />
+                  <AvatarFallback>ER</AvatarFallback>
+                </Avatar>
+                Bivek Gyawali
+                <CaretDoubleUp className="ml-auto" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                side="top"
+                className="w-[--radix-popper-anchor-width]"
+              >
+                <DropdownMenuItem>
+                  <span>Account</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span>Billing</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span>Sign out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            </SidebarMenuItem>
+          </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
     </SidebarProvider>
   )

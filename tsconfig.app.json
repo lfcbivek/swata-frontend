@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "types": ["react", "react-dom"],
+    "noEmit": true,
+    "isolatedModules": true
+  },
+  "include": ["src"]
+}

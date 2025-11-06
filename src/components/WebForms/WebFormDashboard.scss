@@ -1,0 +1,27 @@
+.WebFormDashboard {
+    width: 100%;
+    height: 100%;
+    .DragDropLayout {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+
+        .Draggable {
+            background-color: white;
+            flex-grow: 1;
+            border-right: 1px solid red;
+        }
+    
+        .Droppable {
+            background-color: white;
+            flex-grow: 2;
+
+            .DroppableArea {
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+    }
+    
+}
