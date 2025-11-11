@@ -1,0 +1,32 @@
+.Draggable {
+    display: flex;
+    flex-direction: column;
+
+    
+    .widget-items {
+        display: flex;
+        flex-direction: column;
+        gap:10px;
+    
+        .widget-button {
+            padding: 2% 7% 2% 5%;
+        }
+    
+    }
+
+    .tab-list {
+        padding-top: 10px;
+        float: right;
+    }
+    
+    .tab-contents {
+        margin-top: 10%;
+        padding: 2% 5% 5% 2%;
+        .style-container {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    
+
+}

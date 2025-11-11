@@ -1,0 +1,26 @@
+.DroppableArea {
+    height: calc(100dvh - 150px);
+    width: 100%;
+    background-color: white;
+    color: black;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .header-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+    }
+
+    .form-area {
+        margin: 5% 10% 5% 10%;
+        .dropped-widget {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+    
+}
