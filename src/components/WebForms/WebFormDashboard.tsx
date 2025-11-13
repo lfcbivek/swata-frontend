@@ -17,6 +17,7 @@ export const WebFormDashboard = () => {
   const [parent, setParent] = useState(null);
   const [draggedWidgets, setDraggedWidgets] = useState([]);
   const [droppedWidgets, setDroppedWidgets] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
   const [colors, setColors] = useState({
     formBackgroundColor: DEFAULT_BACKGROUND_COLOR,
     formForegroundColor: DEFAULT_FORM_FOREGROUND_COLOR,
@@ -37,6 +38,10 @@ export const WebFormDashboard = () => {
     }));
   }
 
+  const onDeviceChange = (mobile:boolean) => {
+    setIsMobile(mobile);
+  }
+
   const onWidgetSettingsChange = (newSettings) => {
     // Map widget setting into the format understood by the popup
     const widgetSettings = Object.fromEntries(
@@ -52,7 +57,8 @@ export const WebFormDashboard = () => {
           
           <div className='canvas-container'>
             <div className='settings-section'>
-                <FormSettings 
+                <FormSettings
+                  handleDeviceChange={onDeviceChange}
                 />
             </div>
             <div className='droppable-container' style={{backgroundColor: colors.formBackgroundColor}}>
@@ -64,6 +70,7 @@ export const WebFormDashboard = () => {
                   formForegroundColor={colors.formForegroundColor}
                   formLabelColor={colors.formLabelColor}
                   widgetColor={colors.widgetColor}
+                  isMobile={isMobile}
                 />
               </div>
               <p className='text-center mt-2'>

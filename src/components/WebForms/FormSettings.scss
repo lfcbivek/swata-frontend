@@ -1,9 +1,21 @@
 .FormSettings {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
     .preview-publish {
         display: flex;
         flex-direction: row;
         gap: 10px;
         float: left;
+        align-items: center;
+        justify-content:  center;
+    }
+    .device-preview {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        float: right;
         align-items: center;
         justify-content:  center;
     }

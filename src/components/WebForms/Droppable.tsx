@@ -11,18 +11,19 @@ import { Button } from '../ui/button';
 
 import { AVAILABLE_FORM_WIDGETS, inputTextSettingsMap } from './constants';
 import { RequirementsPopup } from './RequirementsPopup';
+import PhoneFrame from '@/common/PhoneFrame';
 
 import './Droppable.scss';
 
 
-export function Droppable(props) {
+const ContentScreen = (props) => {
   const {
     droppedWidgets,
     handleWidgetSettingsChange,
     widgetSettings,
     formForegroundColor,
     formLabelColor,
-    widgetColor
+    widgetColor,
   } = props;
 
   const {isOver, setNodeRef} = useDroppable({
@@ -35,8 +36,7 @@ export function Droppable(props) {
   const onOpenChange = () => {
     setIsRequirementPopUpOpen(!isRequirementPopUpOpen);
   }
-  
-  return (
+  return(
     <Card ref={setNodeRef} className='DroppableArea' style={{backgroundColor: formForegroundColor}}>
       <CardTitle className='text-center text-3xl header-section'>
         <img src="/terp.png" alt="Swata Logo" className="w-20 h-20 mr-4 inline-block align-center" />
@@ -79,5 +79,32 @@ export function Droppable(props) {
         )}
       </CardFooter>
     </Card>
+  )
+}
+
+export function Droppable(props) {
+  
+  const {
+    isMobile
+  } = props;
+  
+  
+  return (
+    <>
+      { isMobile ? (
+        <div className='align-center items-center'>
+        <PhoneFrame>
+          <ContentScreen 
+            {...props}
+          />
+        </PhoneFrame>
+        </div>
+      ) : (
+        <ContentScreen 
+          {...props}
+        />
+      )
+      }
+    </>
   );
 }
