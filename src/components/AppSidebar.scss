@@ -1,5 +1,7 @@
 .AppSidebar {
     margin-right: 0px;
+    height: 100vh !important;   /* force full height */
+    min-height: 100vh !important;
     width: 65px; // changing this will change the layout. Reason not found yet.
     span {
         color: #6c6a71;

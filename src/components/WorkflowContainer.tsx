@@ -24,13 +24,11 @@ const WorkflowContainer = () => {
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
     const nextPosition = React.useCallback((existing: Node[]) => {
-        console.log(existing)
         const maxY = existing ? Math.max(...existing.map(n => n.position.y)) : 100;
         return { x: 380, y: maxY + 120 }; // simple stacking layout
     }, []);
 
     const handleAddButtonClick = useCallback((selectedNode: AvailableIntegration) => {
-        console.log("handle add click")
         const id = `${selectedNode.integration}-${selectedNode.type}-${Date.now()}`;
     
         const newNode: Node = {
@@ -44,12 +42,10 @@ const WorkflowContainer = () => {
               integration: selectedNode.integration,
             },
           };
-        console.log(newNode)
         setNodes((nds) => nds.concat(newNode));
     }, [setNodes]);
 
     useEffect(() => {
-        console.log("use effect")
         setNodes([
           {
             id: "add-1",

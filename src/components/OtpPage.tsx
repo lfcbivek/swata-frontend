@@ -20,7 +20,6 @@ const OtpPage = ({ children }: { children: React.ReactNode }) => {
     const onOtpChange = (value: string) => {
         setOtp(value);
         if (value.length === OTP_LENGTH) {
-            console.log("here")
             router.navigate({ to: dashboardRoute.id }) 
         }
     }

@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import './ColorPalette.scss';
 import { HexColorPicker } from "react-colorful";
-import { DEFAULT_FORM_BACKGROUND_COLOR } from './constants';
+import { DEFAULT_BACKGROUND_COLOR } from './constants';
+import { EyedropperIcon } from '@phosphor-icons/react/dist/ssr';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+  } from "@/components/ui/popover"
 
 const colors = ["#D9CFC7", "#0046FF", "#BF092F", "#F5A623"];
 
@@ -27,49 +33,54 @@ function darkenColor(hex, amount = 25) {
   }
 
 export default function ColorPalette(props) {
+    const {
+        colorKey
+    } = props;
     const [selectedColor, setSelectedColor] = useState(null);
     const [showColorPicker, setShowColorPicker] = useState(false);
 
     const onColorChange = (colorHex) => {
         setSelectedColor(colorHex);
-        props.handleColorChange(colorHex)
+        props.handleColorChange(colorKey, colorHex)
     }
     return (
         <div>
-        <div className="colors flex flex-row gap-2">
-            {colors.map((c, index) => (
-                <div
-                    key={index}
-                    className="color-square relative cursor-pointer"
-                    style={{
-                        backgroundColor: c,
-                    }}
-                    onClick={() => onColorChange(c)}
-                >
-                    {selectedColor === c && (
-                        <span className="check-mark">✔</span>
-                    )}
+            <div className="colors flex flex-row gap-2">
+                {colors.map((c, index) => (
+                    <div
+                        key={index}
+                        className="color-square relative cursor-pointer"
+                        style={{
+                            backgroundColor: c,
+                        }}
+                        onClick={() => onColorChange(c)}
+                    >
+                        {selectedColor === c && (
+                            <span className="check-mark">✔</span>
+                        )}
 
-                </div>
+                    </div>
+                    
+                ))}
+                <Popover>
+                    <PopoverTrigger>
+                        <div
+                            key='color-picker-div'
+                            className="color-square relative cursor-pointer"
+                            onClick={() => setShowColorPicker(true)}
+                        >
+                            <EyedropperIcon size={32} color="#2bb634" weight="fill" />
+                        </div>
+                    </PopoverTrigger>
+                    <PopoverContent
+                        className="p-0 bg-transparent shadow-none border-none"
+                        sideOffset={4}
+                    >
+                        <HexColorPicker color={DEFAULT_BACKGROUND_COLOR} onChange={onColorChange} />
+                    </PopoverContent>
+                </Popover>
                 
-            ))}
-            <div
-                key='color-picker-div'
-                className="color-square relative cursor-pointer"
-                style={{
-                    backgroundImage: "linear-gradient(135deg, #BF092F 0%, #FF7A00 50%, #FFD700 100%)",
-                }}
-                onClick={() => setShowColorPicker(true)}
-            >
-
             </div>
-            
-        </div>
-        {showColorPicker &&
-                <div className='color-picker mt-20'>
-                    <HexColorPicker color={DEFAULT_FORM_BACKGROUND_COLOR} onChange={onColorChange} />
-                </div>
-            }
         </div>
         
     );

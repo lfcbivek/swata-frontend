@@ -15,7 +15,7 @@ import './Draggable.scss';
 export function Draggable(props) {
   
   const { 
-    handleBackgroundColorChange
+    handleColorChange,
   } = props;
 
   const [isOpen, setIsOpen] = useState({
@@ -69,7 +69,7 @@ export function Draggable(props) {
             <div className='style-container'>
               <div className='background-color'>
                 <FormStyles 
-                  handleBackgroundColorChange={handleBackgroundColorChange}
+                  handleColorChange={handleColorChange}
                 />
               </div>
             </div>

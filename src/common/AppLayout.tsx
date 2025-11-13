@@ -6,7 +6,7 @@ import "./AppLayout.scss";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex h-screen AppLayout">
+    <div className="flex min-h-screen AppLayout">
       {/* Sidebar */}
       <AppSidebar />
 
@@ -15,7 +15,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <AppNavBar />
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto children-container">
+        <main className="flex flex-1 flex-col overflow-y-auto children-container">
           {children}
         </main>
       </div>

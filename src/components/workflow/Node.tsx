@@ -84,7 +84,6 @@ const AddButtonNode = (props: AddButtonProps) => {
 }
 
 const ActionNode:React.FC<any> = (props: NodeProps) => {
-    console.log(props)
     return (
         <Card className="bg-transparent">
             <CardContent className="action-node">

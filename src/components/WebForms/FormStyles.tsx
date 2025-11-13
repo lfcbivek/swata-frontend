@@ -12,7 +12,7 @@ import { useState } from "react";
 export const FormStyles = (props) => {
 
     const {
-        handleBackgroundColorChange
+        handleColorChange
     } = props;
 
     const [isOpen, setIsOpen] = useState({
@@ -48,18 +48,33 @@ export const FormStyles = (props) => {
                 <CollapsibleContent className="mt-5 flex flex-col gap-4">
                     <div className="color-content flex flex-col gap-4">
                         <h2>Primary Color</h2>
-                        <ColorPalette />
-                    </div>
-                    <div className="color-content flex flex-col gap-4">
-                        <h2>Form Color</h2>
-                        <ColorPalette />
+                        <ColorPalette 
+                            colorKey="formForegroundColor"
+                            handleColorChange={handleColorChange}
+                        />
                     </div>
                     <div className="color-content flex flex-col gap-4">
                         <h2>Background Color</h2>
                         <ColorPalette 
-                            handleColorChange={handleBackgroundColorChange}
+                            colorKey="formBackgroundColor"
+                            handleColorChange={handleColorChange}
                         />
                     </div>
+                    <div className="color-content flex flex-col gap-4">
+                        <h2>Widget Color</h2>
+                        <ColorPalette
+                            colorKey="widgetColor" 
+                            handleColorChange={handleColorChange}
+                        />
+                    </div>
+                    <div className="color-content flex flex-col gap-4">
+                        <h2>Widget Label Color</h2>
+                        <ColorPalette
+                            colorKey="formLabelColor" 
+                            handleColorChange={handleColorChange}
+                        />
+                    </div>
+                    
                 </CollapsibleContent>
 
             </Collapsible>

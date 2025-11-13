@@ -1,4 +1,9 @@
-import { Atom, Detective, Bank, Briefcase, CaretDown, Aperture, Users, Island, HandWaving, Table, Calendar, CaretDoubleUp, Tray} from "@phosphor-icons/react";
+import { Atom, AddressBookIcon, MegaphoneIcon, CaretDown, Aperture, Users, Island, HandWaving, Table,  CaretDoubleUp, Tray} from "@phosphor-icons/react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import {
   Sidebar,
@@ -38,86 +43,36 @@ import {
 
 import "./AppSidebar.scss";
 import { ROUTE_PATHS } from "@/constants/routePaths";
+import { Link } from "@tanstack/react-router"
 import { useState } from "react";
 
 // Menu items.
 const items = [
-  // {
-  //   section: "Human Resource Module",
-  //   subSections: [
-  //     {
-  //       title: "HRMS",
-  //       url: "#",
-  //       icon: Briefcase,
-  //       children: [
-  //         {
-  //           title: "Employees",
-  //           url: "#",
-  //           icon: Detective,
-  //           children: []
-  //         },
-  //         {
-  //           title: "Job Posting",
-  //           url: "#",
-  //           icon: Bank,
-  //           children: []
-  //         },
-  //         {
-  //           title: "OnBoarding",
-  //           url: "#",
-  //           icon: Briefcase,
-  //           children: []
-  //         },
-  //         {
-  //           title: "OffBoarding",
-  //           url: "#",
-  //           icon: HandWaving,
-  //           children: []
-  //         },
-  //         {
-  //           title: "Org Chart",
-  //           url: "#",
-  //           icon: Users,
-  //           children: []
-  //         },
-  //         {
-  //           title: "Leave Management",
-  //           url: "#",
-  //           icon: Island,
-  //           children: []
-  //         },
-  //         {
-  //           title: "Calendar",
-  //           url: "#",
-  //           icon: Calendar,
-  //           children: []
-  //         },
-  //       ]
-
-
-  //     },
-      
-  //   ]
-  // },
   {
-    section: "Web Forms",
+    section: "App Sidebar Menu",
     subSections: [
       {
-        title: "Create Form",
+        title: "Contacts",
         url: ROUTE_PATHS.WEB_FORMS.DASHBOARD,
-        icon: <Table size={24} className="items-center" color="white" weight="fill" />,
+        icon: <AddressBookIcon size={24} className="items-center" color="white" />,
+        children: []
+      },
+      {
+        title: "Campaigns",
+        url: ROUTE_PATHS.WEB_FORMS.DASHBOARD,
+        icon: <MegaphoneIcon size={24} className="items-center" color="white" />,
         children: []
       },
       {
         title: "Inbox",
         url: "",
-        icon: <Tray size={24} className="items-center" color="white" weight="fill"/>,
+        icon: <Tray size={24} className="items-center" color="white" />,
         children: []
       },
       {
-        title: "Flows",
+        title: "Automation",
         url: "/workflows",
-        icon: <Atom size={24} className="items-center" color="white" weight="fill"/>,
+        icon: <Atom size={24} className="items-center" color="white" />,
         children: [
         ]
       },
@@ -168,66 +123,39 @@ export default function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.subSections.map((subSection) => {
-                  if (subSection.children.length === 0){
                   return (
-                      <SidebarMenuItem key={subSection.title}>
-                        <SidebarMenuButton asChild>
-                          <a href={subSection.url} className="flex items-center justify-center">
-                            {
-                              isCollapsed && (<div>{subSection.icon} </div>)
-                            }
-                            {!isCollapsed && 
-                              <div>
-                                { subSection.icon }
-                                <span>{subSection.title}</span>
-                              </div>
-                            }
-                            
-                          </a>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    )
-                  
-                  } else {
-                    return(
-                      <Collapsible defaultOpen className="group/collapsible">
-                        <CollapsibleTrigger>
-                          <SidebarMenuItem key={subSection.title}>
-                            <SidebarMenuButton>
-                              {/* <subSection.icon className="!w-[32px] !h-[72px]" color="white"/> */}
-                              {!isCollapsed && 
-                                <span>{subSection.title}</span>
+                    <SidebarMenuItem className="h-10" key={subSection.title}>
+                      <SidebarMenuButton 
+          
+                        className="flex items-center justify-center"
+                      >
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Link 
+                              to={subSection.url}
+                              className="flex items-center justify-center"
+                            >
+                              {
+                                isCollapsed && (<div>{subSection.icon} </div>)
                               }
-                              <CaretDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-                              </SidebarMenuButton>
-                          </SidebarMenuItem>
-                        </CollapsibleTrigger>
-                        <CollapsibleContent>
-                          {subSection.children.map(child => (
-                            <SidebarMenuSub>
-                              <SidebarMenuSubItem key={child.title}>
-                                <SidebarMenuSubButton key={child.title} asChild>
-                                <a href={child.url}>
-                                  {child.icon}
-                                  {!isCollapsed && 
-                                    <span>{child.title}</span>
-                                  }
-                                </a>
-
-                                </SidebarMenuSubButton>
-                              </SidebarMenuSubItem>
-                            </SidebarMenuSub>
-
-                          ))}
-                        </CollapsibleContent>
-                      </Collapsible>
-                    )
-                  }
-                
-                
-                }
+                              {!isCollapsed && 
+                                <div>
+                                  { subSection.icon }
+                                  <span>{subSection.title}</span>
+                                </div>
+                              }
+                              
+                            </Link>
+                          </TooltipTrigger>
+                          <TooltipContent side="right">
+                            {subSection.title}
+                          </TooltipContent>
+                        </Tooltip>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )
+                })}         
                   
-                )}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

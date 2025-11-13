@@ -16,25 +16,97 @@ import {
     InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { Rating, RatingButton } from '@/components/ui/shadcn-io/rating';
+import InputText from "./widgets/InputText";
+import EmailWidget from "./widgets/EmailWidget";
 
 
-const draggbaleItemClass = "rounded-md border px-4 py-2 font-mono text-sm flex flex-row items-center gap-10"
+const draggbaleItemClass = "rounded-md border px-4 py-2 font-mono text-sm flex flex-row items-center gap-10";
 
 
-export const DEFAULT_FORM_BACKGROUND_COLOR = "#D9CFC7";
+export const DEFAULT_BACKGROUND_COLOR = "#D9CFC7";
+export const DEFAULT_FORM_FOREGROUND_COLOR = "#FFFFFF";
+export const DEFAULT_LABEL_COLOR = "#000000";
+export const DEFAULT_WIDGET_COLOR = "FFFFFF";
 
 export const DEFAULT_WIDGET_LABELS = {
-    INPUT_TEXT: "Full Name"
+    INPUT_TEXT: "Full Name",
+    INPUT_EMAIL: "Email"
 }
 
 
-export const DEFAULT_RULES = {
-    INPUT_TEXT: [{
-        required: false,
-        maxLength: 100,
-        
-    }]
+export const DEFAULT_SETTINGS = {
+    INPUT_TEXT: [
+        {
+            key: "required",
+            label: "Required",
+            value: true,
+            inputType: "checkbox"
+        },
+        {
+            key: "maxLength",
+            label: "Max Length",
+            value: 100,
+            inputType: "input-text",
+        },
+        {
+            key: "label",
+            label: "Form Label",
+            value: DEFAULT_WIDGET_LABELS.INPUT_TEXT,
+            inputType: "input-text"
+        },
+        {
+            key: "disabled",
+            label: "Disabled",
+            value: false,
+            inputType: "checkbox"
+        },
+        {
+            key: "disabledValue",
+            label: "Disabled Value",
+            value: "",
+            inputType: "input-text"
+        },
+    ],
+    INPUT_EMAIL: [
+        {
+            key: "required",
+            label: "Required",
+            value: true,
+            inputType: "checkbox"
+        },
+        {
+            key: "maxLength",
+            label: "Max Length",
+            value: 100,
+            inputType: "input-text",
+        },
+        {
+            key: "label",
+            label: "Form Label",
+            value: DEFAULT_WIDGET_LABELS.INPUT_EMAIL,
+            inputType: "input-text"
+        },
+        {
+            key: "disabled",
+            label: "Disabled",
+            value: false,
+            inputType: "checkbox"
+        },
+        {
+            key: "disabledValue",
+            label: "Disabled Value",
+            value: "",
+            inputType: "input-text"
+        },
+
+    ]
 }
+
+const inputTextSettings = DEFAULT_SETTINGS.INPUT_TEXT;
+export const inputTextSettingsMap = Object.fromEntries(
+    inputTextSettings.map(s => [s.key, s.value])
+);
+
 export const AVAILABLE_FORM_WIDGETS = [
     {
         id: "input-text-widget",
@@ -45,12 +117,22 @@ export const AVAILABLE_FORM_WIDGETS = [
                 <h2>Text</h2>
             </div>
         ),
-        droppableUI: (
+        droppableUI: (setting, labelColor, widgetColor) => (
             <div className="flex flex-col gap-2">
-                <Label>{DEFAULT_WIDGET_LABELS.INPUT_TEXT}</Label>
-                <Input type="text" />
+              <InputText
+                label={setting.label}
+                // placeHolder={settings.placeholder}
+                disabled={setting.disabled}
+                maxLength={setting.maxLength}
+                disabledValue={setting.disabledValue}
+                labelColor={labelColor}
+                style={{
+                    // border: `1px solid ${borderColor}`,
+                    backgroundColor: widgetColor,
+                }}
+              />
             </div>
-        )
+        ),
     }, 
     {
         id: "input-email-widget",
@@ -60,10 +142,14 @@ export const AVAILABLE_FORM_WIDGETS = [
                 <h2>Email</h2>
             </div>
         ),
-        droppableUI: (
+        droppableUI: (setting) =>(
             <div className="flex flex-col gap-2">
-                <Label>Email</Label>
-                <Input type="email" />
+                <EmailWidget
+                    label={setting.label}
+                    // placeHolder={settings.placeholder}
+                    disabled={setting.disabled}
+                    maxLength={setting.maxLength}
+              />
             </div>
         )
     },

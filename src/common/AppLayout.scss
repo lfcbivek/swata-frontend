@@ -1,8 +1,10 @@
-.AppLayout {
-    .children-container {
-        // padding: 10px;
-    }
-}
-html, body, #root {
-    height: 100%;
+
+html,
+body,
+#root {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
