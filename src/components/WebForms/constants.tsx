@@ -117,7 +117,7 @@ export const AVAILABLE_FORM_WIDGETS = [
                 <h2>Text</h2>
             </div>
         ),
-        droppableUI: (setting, labelColor, widgetColor) => (
+        droppableUI: (setting:any, labelColor:string, widgetColor:string) => (
             <div className="flex flex-col gap-2">
               <InputText
                 label={setting.label}
@@ -143,7 +143,7 @@ export const AVAILABLE_FORM_WIDGETS = [
                 <h2>Email</h2>
             </div>
         ),
-        droppableUI: (setting) =>(
+        droppableUI: (setting:any) =>(
             <div className="flex flex-col gap-2">
                 <EmailWidget
                     label={setting.label}

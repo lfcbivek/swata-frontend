@@ -9,16 +9,16 @@ import ColorPalette from "./ColorPalette";
 
 import { useState } from "react";
 
-export const FormStyles = (props) => {
+export const FormStyles = (props:any) => {
 
     const {
         handleColorChange
     } = props;
 
-    const [isOpen, setIsOpen] = useState({
+    const [isOpen, setIsOpen] = useState<{ [key: string]: boolean }>({
         'colors': false
     })
-    const onOpenChange = (id) => {
+    const onOpenChange = (id:any) => {
         setIsOpen(prev => ({
             ...prev,
             [id]: !prev[id]

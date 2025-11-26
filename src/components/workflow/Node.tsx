@@ -33,17 +33,17 @@ import './Node.scss'
 type AddButtonProps = {
     onAdd: (integration: AvailableIntegration) => void
 }
-const AddButtonNode = (props: AddButtonProps) => {
+const AddButtonNode = (props: any) => {
     const [open, setOpen] = useState(false);
-    const [selectedNode, setSelectedNode] = useState("");
+    const [selectedNode, setSelectedNode] = useState<String | null>(null);
 
-    const onClick = (e: ReactMouseEvent<HTMLDivElement>) => {
-        if(selectedNode !== "") {
+    const onAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
+        if(selectedNode) {
             e.preventDefault();
             e.stopPropagation();
             setOpen(!open);
             props.data.onAdd(selectedNode);
-            setSelectedNode("");
+            setSelectedNode(null);
         }
     }
 
@@ -56,7 +56,7 @@ const AddButtonNode = (props: AddButtonProps) => {
             <DialogHeader>
             <DialogTitle>Add a node</DialogTitle>
             <DialogDescription>
-                <Select onValueChange={(value: AvailableIntegration) => setSelectedNode(value)}>
+                <Select onValueChange={(value) => setSelectedNode(value)}>
                     <SelectTrigger className="w-[400px]">
                         <SelectValue placeholder="Select a node" />
                     </SelectTrigger>
@@ -65,7 +65,7 @@ const AddButtonNode = (props: AddButtonProps) => {
                             {
                                 availableIntegrations.map(integration => (
                                     <div>
-                                        <SelectItem value={integration}>
+                                        <SelectItem value={JSON.stringify(integration)}>
                                             <img src="./slack.png" width={40} height={40} />
                                             {integration.label}
                                         </SelectItem>
@@ -77,13 +77,13 @@ const AddButtonNode = (props: AddButtonProps) => {
                 </Select>
             </DialogDescription>
             </DialogHeader>
-            <Button onClick={onClick}>Add</Button>
+            <Button onClick={onAdd}>Add</Button>
         </DialogContent>
         </Dialog>
     )
 }
 
-const ActionNode:React.FC<any> = (props: NodeProps) => {
+const ActionNode:React.FC<any> = (props: any) => {
     return (
         <Card className="bg-transparent">
             <CardContent className="action-node">

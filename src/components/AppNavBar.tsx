@@ -20,7 +20,7 @@ import './AppNavBar.scss';
 
 export default function AppNavBar() {
     return (
-        <nav class="app-navbar">
+        <nav className="app-navbar">
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>

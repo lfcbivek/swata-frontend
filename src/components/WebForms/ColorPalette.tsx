@@ -11,7 +11,7 @@ import {
 
 const colors = ["#D9CFC7", "#0046FF", "#BF092F", "#F5A623"];
 
-function darkenColor(hex, amount = 25) {
+function darkenColor(hex:string, amount = 25) {
     let col = hex.replace("#", "");
     let num = parseInt(col, 16);
   
@@ -32,14 +32,14 @@ function darkenColor(hex, amount = 25) {
     return newColor;
   }
 
-export default function ColorPalette(props) {
+export default function ColorPalette(props:any) {
     const {
         colorKey
     } = props;
     const [selectedColor, setSelectedColor] = useState(null);
     const [showColorPicker, setShowColorPicker] = useState(false);
 
-    const onColorChange = (colorHex) => {
+    const onColorChange = (colorHex:any) => {
         setSelectedColor(colorHex);
         props.handleColorChange(colorKey, colorHex)
     }

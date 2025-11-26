@@ -12,7 +12,7 @@ import { FormStyles } from './FormStyles';
 
 import './Draggable.scss';
 
-export function Draggable(props) {
+export function Draggable(props:any) {
   
   const { 
     handleColorChange,
@@ -23,7 +23,7 @@ export function Draggable(props) {
     styleCollapsible: false
   });
 
-  const DraggableItem = ({id, children}) => {
+  const DraggableItem = ({id, children}:any) => {
     const {attributes, listeners, setNodeRef, transform} = useDraggable({id});
     const style = transform ? {
       transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,

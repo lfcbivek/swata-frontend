@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 
 import './FormSettings.scss';
 
-export const FormSettings = (props) => {
+export const FormSettings = (props:any) => {
     const {
         handleDeviceChange
     } = props;

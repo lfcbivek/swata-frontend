@@ -89,12 +89,12 @@ export default function AppSidebar() {
         "--sidebar-width": "65px",
         "--sidebar-width-icon": "65px",
         "--sidebar-width-mobile": "15rem"
-      }}
+      } as React.CSSProperties}
     >
     <Sidebar
       collapsible="icon"
     >
-      <SidebarHeader asChild>
+      <SidebarHeader>
         {isCollapsed && 
           <div className="flex items-center gap-5 px-2">
             {/* <img src="/swata.svg" alt="Swata Logo" className="w-18 h-20 inline-block align-center" /> */}

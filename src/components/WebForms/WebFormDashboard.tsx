@@ -15,8 +15,8 @@ import './WebFormDashboard.scss';
 
 export const WebFormDashboard = () => {
   const [parent, setParent] = useState(null);
-  const [draggedWidgets, setDraggedWidgets] = useState([]);
-  const [droppedWidgets, setDroppedWidgets] = useState([]);
+  const [draggedWidgets, setDraggedWidgets] = useState<any>([]);
+  const [droppedWidgets, setDroppedWidgets] = useState<any>([]);
   const [isMobile, setIsMobile] = useState(false);
   const [colors, setColors] = useState({
     formBackgroundColor: DEFAULT_BACKGROUND_COLOR,
@@ -24,14 +24,14 @@ export const WebFormDashboard = () => {
     formLabelColor: DEFAULT_LABEL_COLOR,
     widgetColor: DEFAULT_WIDGET_COLOR
   });
-  const [widgetSettings, setWidgetSettings] = useState(null);
+  const [widgetSettings, setWidgetSettings] = useState<any>(null);
 
 
-  const onWidgetDrag= (widget) => {
-    setDraggedWidgets(prev => [...prev, widget]);
+  const onWidgetDrag= (widget:any) => {
+    setDraggedWidgets((prev:any) => [...prev, widget]);
   } 
 
-  const onColorChange = (key, colorHex) => {
+  const onColorChange = (key:string, colorHex:string) => {
     setColors(prev => ({
       ...prev,
       [key]: colorHex
@@ -42,10 +42,10 @@ export const WebFormDashboard = () => {
     setIsMobile(mobile);
   }
 
-  const onWidgetSettingsChange = (newSettings) => {
+  const onWidgetSettingsChange = (newSettings:any) => {
     // Map widget setting into the format understood by the popup
     const widgetSettings = Object.fromEntries(
-      newSettings.map(s => [s.key, s.value])
+      newSettings.map((s:any) => [s.key, s.value])
     );
     setWidgetSettings(widgetSettings)
   }
@@ -92,14 +92,14 @@ export const WebFormDashboard = () => {
     </div>
   );
 
-  function handleDragEnd(event) {
+  function handleDragEnd(event:any) {
     const {active, over} = event;
 
     if (!active || !over) return;
     // If the item is dropped over a container, set it as the parent
     // otherwise reset the parent to `null`
     setParent(over ? over.id : null);
-    setDroppedWidgets(prev => [
+    setDroppedWidgets((prev:any) => [
       ...prev, 
       { 
         ...active,

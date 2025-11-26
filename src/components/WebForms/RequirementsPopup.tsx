@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/popover"
 import { DEFAULT_SETTINGS } from "./constants"
 
-export function RequirementsPopup(props) {
+export function RequirementsPopup(props:any) {
     const {
         open,
         onOpenChange,
@@ -50,7 +50,7 @@ export function RequirementsPopup(props) {
                                 {setting.inputType === "input-text" && (
                                     <Input
                                         id={`setting-${idx}`}
-                                        value={setting.value}
+                                        value={String(setting.value)}
                                         className="col-span-2 h-6"
                                         onChange={(e) => handleSettingChange(idx, e.target.value)}
                                     />
@@ -58,7 +58,7 @@ export function RequirementsPopup(props) {
                                 {
                                     setting.inputType === "checkbox" && (
                                         <Checkbox
-                                            checked={setting.value}
+                                            checked={!!setting.value}
                                             onCheckedChange={(checked)=> handleSettingChange(idx, checked)}
                                         />
                                     )

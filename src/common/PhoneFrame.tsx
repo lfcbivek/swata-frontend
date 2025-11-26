@@ -1,4 +1,4 @@
-const PhoneFrame = ({ children }) => {
+const PhoneFrame = ({ children }:any) => {
     return (
       <div
         className="

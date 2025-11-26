@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-const InputText = (props) => {
+const InputText = (props:any) => {
     const {
         label,
         required,

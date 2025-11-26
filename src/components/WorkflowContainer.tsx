@@ -5,22 +5,16 @@ import { useCallback, useMemo, useState, useEffect } from 'react';
 import React from "react";
 import { type AvailableIntegration } from '@/common/utils';
 
-interface NodeProps<T = any> {
 
-}
 
-type NodeTypes = {
-    [nodeType: string]: React.ComponentType<NodeProps<any>>
-}
-
-const nodeTypes: NodeTypes = {
+const nodeTypes: any = {
     addButton: AddButtonNode,
     actionNode: ActionNode,
 };
 
 const WorkflowContainer = () => {
     
-    const [nodes, setNodes, onNodesChange] = useNodesState();
+    const [nodes, setNodes, onNodesChange] = useNodesState<any>([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
     const nextPosition = React.useCallback((existing: Node[]) => {

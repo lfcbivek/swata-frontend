@@ -33,7 +33,7 @@ import {
 import countryList from 'react-select-country-list';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-import { Route as otpRoute} from '../routes/verify-otp.tsx';
+import { Route as otpRoute} from '@/routes/verify-otp';
 import { useRouter } from '@tanstack/react-router';
 import { checkSubDomainAvailability } from '@/core/api';
 
@@ -128,7 +128,8 @@ const SignUpForm = () => {
         >
           <Card className="signup-card">
             <CardContent>
-              <div className="form-fields">
+              <h1>Sign Up</h1>
+              <div className="form-fields mt-8">
                 { formGroup === 0 && (
                   <>
                     {/* First Name */}

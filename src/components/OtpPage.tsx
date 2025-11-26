@@ -9,11 +9,11 @@ import {
 import { useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { Card, CardContent, CardTitle, CardDescription } from "./ui/card";
-import { Route as dashboardRoute} from '../routes/dashboard.tsx';
+import { Route as dashboardRoute} from '@/routes/dashboard';
 
 import "./OtpPage.scss";
 
-const OtpPage = ({ children }: { children: React.ReactNode }) => {
+const OtpPage = () => {
     const router = useRouter();
     const [otp, setOtp] = useState("")
     const OTP_LENGTH = 6;

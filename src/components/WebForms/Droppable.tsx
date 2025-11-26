@@ -16,7 +16,7 @@ import PhoneFrame from '@/common/PhoneFrame';
 import './Droppable.scss';
 
 
-const ContentScreen = (props) => {
+const ContentScreen = (props:any) => {
   const {
     droppedWidgets,
     handleWidgetSettingsChange,
@@ -45,7 +45,7 @@ const ContentScreen = (props) => {
       <CardContent className="form-area">
         <div className="dropped-widget">
           {
-            droppedWidgets.map((droppedWidget) => {
+            droppedWidgets.map((droppedWidget:any) => {
               const widget = AVAILABLE_FORM_WIDGETS.find(
                 (w) => w.id === droppedWidget.id
               );
@@ -61,11 +61,11 @@ const ContentScreen = (props) => {
                     >
                       {/* This is now the popover trigger anchor — but doesn't handle opening */}
                       <div onClick={onOpenChange}>
-                        {widget.droppableUI(widgetSettings ?? droppedWidget.widgetSettings, formLabelColor, widgetColor)}
+                        { typeof widget.droppableUI === "function" && widget.droppableUI(widgetSettings ?? droppedWidget.widgetSettings, formLabelColor, widgetColor)}
                       </div>
                     </RequirementsPopup>
                   ) : (
-                    widget.droppableUI(widgetSettings ?? droppedWidget.widgetSettings, formLabelColor, widgetColor)
+                    typeof widget.droppableUI === "function" && widget.droppableUI(widgetSettings ?? droppedWidget.widgetSettings, formLabelColor, widgetColor)
                   )}
                 </div>
               );
@@ -82,7 +82,7 @@ const ContentScreen = (props) => {
   )
 }
 
-export function Droppable(props) {
+export function Droppable(props:any) {
   
   const {
     isMobile
