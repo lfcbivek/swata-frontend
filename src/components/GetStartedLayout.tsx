@@ -5,6 +5,7 @@ import "./GetStarted.scss";
 const GetStartedLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="GetStarted">
+      <img src="/swata.svg" alt="swata" className="top-left-image" />
       {children}
     </div>
   );

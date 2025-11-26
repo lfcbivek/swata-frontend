@@ -21,17 +21,26 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            
+            padding: 10px;
             .settings-section {
                 height: 5%;
                 // flex: fixed;
                 padding-top: 5px;
             }
-            .droppable-container {
-                flex: 1;  
-                padding: 2% 20%;
-                overflow-y: auto;
+            .droppable-wrapper {
+                margin: 10px;
+                // background-color: red;
+                .droppable-container {
+                    flex: 1;  
+                    overflow-y: auto;
+                    border-radius: 5px;
+                    
+                    .Droppable {
+                        padding: 2% 20%;
+                    }
+                }
             }
+            
         }
 
     }

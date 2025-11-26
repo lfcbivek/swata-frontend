@@ -49,9 +49,37 @@ export function Draggable(props) {
     <div className='Draggable flex w-full max-w-sm flex-col gap-6'>
 
       <Tabs defaultValue="widgets"  className='tab-list'>
-        <TabsList>
-          <TabsTrigger value="widgets">Widgets</TabsTrigger>
-          <TabsTrigger value="styles">Styles</TabsTrigger>
+        <TabsList className='justify-center items-center'>
+          <TabsTrigger 
+            value="widgets"
+            className="
+              data-[state=active]:bg-[#658C58]
+              data-[state=active]:text-white 
+              px-4 py-2
+            "
+          >
+            Widgets
+          </TabsTrigger>
+          <TabsTrigger 
+            value="styles"
+            className="
+              data-[state=active]:bg-[#658C58]
+              data-[state=active]:text-white 
+              px-4 py-2
+            "
+          >
+            Styles
+          </TabsTrigger>
+          <TabsTrigger 
+            value="hhh"
+            className="
+              data-[state=active]:bg-[#658C58]
+              data-[state=active]:text-white 
+              px-4 py-2
+            "
+          >
+            HHHH
+          </TabsTrigger>
         </TabsList>
         <div className='tab-contents'>
           <TabsContent value="widgets">

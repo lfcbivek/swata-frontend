@@ -12,7 +12,7 @@
 		border-radius: 0.75rem;
 
 		// Glassmorphism surface to fit dark gradient background
-		background: rgba(255, 255, 255, 0.08);
+		background: var(--charcoal-color);
 		border: 1px solid rgba(255, 255, 255, 0.2);
 		backdrop-filter: blur(14px);
 		-webkit-backdrop-filter: blur(14px);
@@ -190,8 +190,7 @@
 		.next-button,
 		.previous-button,
 		.submit-button {
-			background-color: #003f88;
-            border: 1px solid #52796f;
+			background-color: #208d45;
 			padding: 0.35rem 0.6rem;
 			font-size: 0.875rem;
 			&:hover {

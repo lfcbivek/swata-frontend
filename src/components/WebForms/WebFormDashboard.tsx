@@ -61,21 +61,24 @@ export const WebFormDashboard = () => {
                   handleDeviceChange={onDeviceChange}
                 />
             </div>
-            <div className='droppable-container' style={{backgroundColor: colors.formBackgroundColor}}>
-              <div className="Droppable">
-                <Droppable  
-                  droppedWidgets={droppedWidgets}
-                  handleWidgetSettingsChange={onWidgetSettingsChange}
-                  widgetSettings={widgetSettings}
-                  formForegroundColor={colors.formForegroundColor}
-                  formLabelColor={colors.formLabelColor}
-                  widgetColor={colors.widgetColor}
-                  isMobile={isMobile}
-                />
+            <div className='droppable-wrapper'>
+              <div className='droppable-container' style={{backgroundColor: !isMobile ? colors.formBackgroundColor : DEFAULT_BACKGROUND_COLOR}}>
+                <div className="Droppable">
+                  <Droppable  
+                    droppedWidgets={droppedWidgets}
+                    handleWidgetSettingsChange={onWidgetSettingsChange}
+                    widgetSettings={widgetSettings}
+                    formForegroundColor={colors.formForegroundColor}
+                    formLabelColor={colors.formLabelColor}
+                    widgetColor={colors.widgetColor}
+                    isMobile={isMobile}
+                  />
+                  <div className="absolute left-25 bottom-10 bg-[#d6132a] rounded-xl shadow px-4 py-1">
+                    <p className="text-center text-sm text-white">⚡ Powered by Swata</p>
+                  </div>
+                </div>
+                
               </div>
-              <p className='text-center mt-2'>
-               ⚡ Powered by Swata
-              </p>
             </div>
           </div>
           <div className="Draggable">

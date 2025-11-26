@@ -129,6 +129,7 @@ export const AVAILABLE_FORM_WIDGETS = [
                 style={{
                     // border: `1px solid ${borderColor}`,
                     backgroundColor: widgetColor,
+                    color: labelColor,
                 }}
               />
             </div>

@@ -40,7 +40,7 @@ const ContentScreen = (props) => {
     <Card ref={setNodeRef} className='DroppableArea' style={{backgroundColor: formForegroundColor}}>
       <CardTitle className='text-center text-3xl header-section'>
         <img src="/terp.png" alt="Swata Logo" className="w-20 h-20 mr-4 inline-block align-center" />
-        <span>Feedback Form</span>
+        <span style={{color: formLabelColor}}>Feedback Form</span>
       </CardTitle>
       <CardContent className="form-area">
         <div className="dropped-widget">

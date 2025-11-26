@@ -71,6 +71,7 @@ const SignUpForm = () => {
 
   const router = useRouter();
   const onSubmit = (values: z.infer<typeof SignUpSchema>) => {
+    console.log("values")
     setIsSignUpSubmitted(true);
     router.navigate({ to: otpRoute.id }) 
   }

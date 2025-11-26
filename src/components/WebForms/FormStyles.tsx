@@ -68,7 +68,7 @@ export const FormStyles = (props) => {
                         />
                     </div>
                     <div className="color-content flex flex-col gap-4">
-                        <h2>Widget Label Color</h2>
+                        <h2>Text Color</h2>
                         <ColorPalette
                             colorKey="formLabelColor" 
                             handleColorChange={handleColorChange}
