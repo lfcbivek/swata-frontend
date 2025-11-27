@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkflowsRouteImport } from './routes/workflows'
 import { Route as VerifyOtpRouteImport } from './routes/verify-otp'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as GetStartedRouteImport } from './routes/get-started'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
@@ -24,6 +25,11 @@ const WorkflowsRoute = WorkflowsRouteImport.update({
 const VerifyOtpRoute = VerifyOtpRouteImport.update({
   id: '/verify-otp',
   path: '/verify-otp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GetStartedRoute = GetStartedRouteImport.update({
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/get-started': typeof GetStartedRoute
+  '/login': typeof LoginRoute
   '/verify-otp': typeof VerifyOtpRoute
   '/workflows': typeof WorkflowsRoute
   '/web-forms/dashboard': typeof WebFormsDashboardRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/get-started': typeof GetStartedRoute
+  '/login': typeof LoginRoute
   '/verify-otp': typeof VerifyOtpRoute
   '/workflows': typeof WorkflowsRoute
   '/web-forms/dashboard': typeof WebFormsDashboardRoute
@@ -68,6 +76,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/get-started': typeof GetStartedRoute
+  '/login': typeof LoginRoute
   '/verify-otp': typeof VerifyOtpRoute
   '/workflows': typeof WorkflowsRoute
   '/web-forms/dashboard': typeof WebFormsDashboardRoute
@@ -78,6 +87,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/get-started'
+    | '/login'
     | '/verify-otp'
     | '/workflows'
     | '/web-forms/dashboard'
@@ -86,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/get-started'
+    | '/login'
     | '/verify-otp'
     | '/workflows'
     | '/web-forms/dashboard'
@@ -94,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/get-started'
+    | '/login'
     | '/verify-otp'
     | '/workflows'
     | '/web-forms/dashboard'
@@ -103,6 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   GetStartedRoute: typeof GetStartedRoute
+  LoginRoute: typeof LoginRoute
   VerifyOtpRoute: typeof VerifyOtpRoute
   WorkflowsRoute: typeof WorkflowsRoute
   WebFormsDashboardRoute: typeof WebFormsDashboardRoute
@@ -122,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/verify-otp'
       fullPath: '/verify-otp'
       preLoaderRoute: typeof VerifyOtpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/get-started': {
@@ -159,6 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   GetStartedRoute: GetStartedRoute,
+  LoginRoute: LoginRoute,
   VerifyOtpRoute: VerifyOtpRoute,
   WorkflowsRoute: WorkflowsRoute,
   WebFormsDashboardRoute: WebFormsDashboardRoute,

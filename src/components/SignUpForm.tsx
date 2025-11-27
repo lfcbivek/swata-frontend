@@ -4,8 +4,7 @@ import {
   Card,
   CardContent,
   CardFooter,
-  CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card"
 import {
   Form,
@@ -71,7 +70,6 @@ const SignUpForm = () => {
 
   const router = useRouter();
   const onSubmit = (values: z.infer<typeof SignUpSchema>) => {
-    console.log("values")
     setIsSignUpSubmitted(true);
     router.navigate({ to: otpRoute.id }) 
   }
@@ -127,11 +125,15 @@ const SignUpForm = () => {
           className="space-y-8"
         >
           <Card className="signup-card">
-            <CardContent>
+            <CardTitle className="px-6 flex flex-col gap-2">
               <h1>Sign Up</h1>
-              <div className="form-fields mt-8">
+              <span className="text-gray-400 text-sm"> Just a few things to get started. </span>
+            </CardTitle>
+            <CardContent>
+              <div className="form-fields mt-2">
                 { formGroup === 0 && (
                   <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* First Name */}
                     <FormField
                       control={form.control}
@@ -161,6 +163,7 @@ const SignUpForm = () => {
                         </FormItem>
                       )}
                     />
+                  </div>
 
                   {/* Email */}
                   <FormField
@@ -177,63 +180,65 @@ const SignUpForm = () => {
                     )}
                   /> 
 
-                  {/* Password */}
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Password</FormLabel>
-                        <FormControl>
-                          <div className="password-field">
-                            <Input
-                              type={showPassword ? "text" : "password"}
-                              placeholder="Password"
-                              {...field}
-                            />
-                            <button
-                              type="button"
-                              aria-label={showPassword ? "Hide password" : "Show password"}
-                              className="password-toggle"
-                              onClick={() => setShowPassword((v) => !v)}
-                            >
-                              {showPassword ? <EyeOff /> : <Eye />}
-                            </button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  /> 
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Password */}
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Password</FormLabel>
+                          <FormControl>
+                            <div className="password-field">
+                              <Input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Password"
+                                {...field}
+                              />
+                              <button
+                                type="button"
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                className="password-toggle"
+                                onClick={() => setShowPassword((v) => !v)}
+                              >
+                                {showPassword ? <EyeOff /> : <Eye />}
+                              </button>
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    /> 
 
-                  {/* Confirm Password */}
-                  <FormField
-                    control={form.control}
-                    name="confirmPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Confirm Password</FormLabel>
-                        <FormControl>
-                          <div className="password-field">
-                            <Input
-                              type={showConfirmPassword ? "text" : "password"}
-                              placeholder="Confirm Password"
-                              {...field}
-                            />
-                            <button
-                              type="button"
-                              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
-                              className="password-toggle"
-                              onClick={() => setShowConfirmPassword((v) => !v)}
-                            >
-                              {showConfirmPassword ? <EyeOff /> : <Eye />}
-                            </button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  /> 
+                    {/* Confirm Password */}
+                    <FormField
+                      control={form.control}
+                      name="confirmPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Confirm Password</FormLabel>
+                          <FormControl>
+                            <div className="password-field">
+                              <Input
+                                type={showConfirmPassword ? "text" : "password"}
+                                placeholder="Confirm Password"
+                                {...field}
+                              />
+                              <button
+                                type="button"
+                                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                                className="password-toggle"
+                                onClick={() => setShowConfirmPassword((v) => !v)}
+                              >
+                                {showConfirmPassword ? <EyeOff /> : <Eye />}
+                              </button>
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    /> 
+                  </div>
 
                   {/* Sub Domain */}
                   <FormField
@@ -245,7 +250,9 @@ const SignUpForm = () => {
                         <FormControl>
                           <div className="subdomain">
                             <Input placeholder="subdomain" {...field} className="subdomain-input" />
-                            <h1>.swata-tech.com</h1>
+                            <span className="text-white text-sm md:text-base whitespace-nowrap">
+                              .swata-tech.com
+                            </span>
                           </div>
                         </FormControl>
                         <FormMessage />
@@ -270,62 +277,63 @@ const SignUpForm = () => {
                       </FormItem>
                     )}
                   />
-
-                  {/* Country */}
-                  <FormField
-                    control={form.control}
-                    name="country"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Country</FormLabel>
-                        <FormControl>
-                            <div className="countries-select">
-                              <Select
-                                onValueChange={field.onChange}
-                                value={field.value}
-                              >
-                                <SelectTrigger className="w-[100%] select-trigger">
-                                  <SelectValue placeholder="Select country" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectGroup>
-                                    {countryOptions.map((country: { label: string; value: string }) => (
-                                      <SelectItem key={country.value} value={country.value}>
-                                        {country.label}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectGroup>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  {/* Phone Number */}
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Phone Number</FormLabel>
-                        <FormControl>
-                          <PhoneInput
-                            placeholder="Enter phone number"
-                            defaultCountry="NP"
-                            international
-                            withCountryCallingCode
-                            value={field.value || ""}
-                            onChange={(v) => field.onChange(v ?? "")}
-                            onBlur={field.onBlur}
-                            className="phone-input"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Country */}
+                    <FormField
+                      control={form.control}
+                      name="country"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Country</FormLabel>
+                          <FormControl>
+                              <div className="countries-select">
+                                <Select
+                                  onValueChange={field.onChange}
+                                  value={field.value}
+                                >
+                                  <SelectTrigger className="w-[100%] select-trigger">
+                                    <SelectValue placeholder="Select country" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectGroup>
+                                      {countryOptions.map((country: { label: string; value: string }) => (
+                                        <SelectItem key={country.value} value={country.value}>
+                                          {country.label}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectGroup>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    {/* Phone Number */}
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Phone Number</FormLabel>
+                          <FormControl>
+                            <PhoneInput
+                              placeholder="Enter phone number"
+                              defaultCountry="NP"
+                              international
+                              withCountryCallingCode
+                              value={field.value || ""}
+                              onChange={(v) => field.onChange(v ?? "")}
+                              onBlur={field.onBlur}
+                              className="phone-input"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
                   {/* Website*/}
                   <FormField
