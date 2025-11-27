@@ -10,16 +10,25 @@ import { useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { Card, CardContent, CardTitle, CardDescription } from "./ui/card";
 import { Route as dashboardRoute} from '@/routes/dashboard';
+import { verifyOtp } from "@/core/api";
+import { Route } from "@/routes/verify-otp";
 
 import "./OtpPage.scss";
 
 const OtpPage = () => {
+    const { userId } = Route.useSearch();
     const router = useRouter();
     const [otp, setOtp] = useState("")
+    const [error, setError] = useState<boolean>(false);
     const OTP_LENGTH = 6;
-    const onOtpChange = (value: string) => {
+    const onOtpChange = async(value: string) => {
         setOtp(value);
         if (value.length === OTP_LENGTH) {
+            const response = await verifyOtp(userId, value);
+            if(!response.success) {
+                setError(response.error);
+                return;
+            }
             router.navigate({ to: dashboardRoute.id }) 
         }
     }
@@ -40,6 +49,9 @@ const OtpPage = () => {
                             <InputOTPSlot index={5} />
                         </InputOTPGroup>
                     </InputOTP>
+                    { error &&
+                        <span>OTP Verification Failed</span>
+                    }
                 </CardContent>
 
             </Card>

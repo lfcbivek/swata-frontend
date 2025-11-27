@@ -25,7 +25,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -34,7 +33,10 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { Route as otpRoute} from '@/routes/verify-otp';
 import { useRouter } from '@tanstack/react-router';
-import { checkSubDomainAvailability } from '@/core/api';
+import { 
+  checkSubDomainAvailability,
+  registerUser
+} from '@/core/api';
 
 
 import './SignUpForm.scss';
@@ -59,7 +61,8 @@ const SignUpForm = () => {
   const [formGroup, setFormGroup] = useState<number>(0);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-  const [isSignUpSubmitted, setIsSignUpSubmitted] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const countryOptions = useMemo(() => countryList().getData(), []);
 
 
@@ -69,9 +72,26 @@ const SignUpForm = () => {
   })
 
   const router = useRouter();
-  const onSubmit = (values: z.infer<typeof SignUpSchema>) => {
-    setIsSignUpSubmitted(true);
-    router.navigate({ to: otpRoute.id }) 
+  const onSubmit = async(values: z.infer<typeof SignUpSchema>) => {
+    try {
+      setLoading(true);
+      const data = await registerUser(values);
+      if(!data.success) {
+        setError(data.error);
+        return;
+      }
+      router.navigate(
+        { 
+          to: otpRoute.id,
+          search: { userId: `${data.data.temp_user_id}`},
+        }
+      )
+    } catch(err: any) {
+      setError(err.message ?? "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+ 
   }
 
   const onNextClick = async () => {
@@ -89,7 +109,7 @@ const SignUpForm = () => {
 
     const subDomain = form.watch("subDomain");
     const isSubDomainAvailable = await checkSubDomainAvailability(subDomain);
-    const isAvailable = isSubDomainAvailable.available;
+    const isAvailable = isSubDomainAvailable.data.available;
 
     if(!isAvailable) {
       form.setError("subDomain", {
@@ -127,7 +147,7 @@ const SignUpForm = () => {
           <Card className="signup-card">
             <CardTitle className="px-6 flex flex-col gap-2">
               <h1>Sign Up</h1>
-              <span className="text-gray-400 text-sm"> Just a few things to get started. </span>
+              <span className="text-gray-400 text-sm"> Just a few things before getting started. </span>
             </CardTitle>
             <CardContent>
               <div className="form-fields mt-2">
@@ -369,14 +389,17 @@ const SignUpForm = () => {
 
               {formGroup !== 0 && (
                 <div className="submit-row">
-                  <Button type="submit" size="lg" className="submit-button">
-                    {isSignUpSubmitted && 
+                  <Button type="submit" size="lg" className="submit-button" disabled={loading}>
+                    {loading&& 
                       <SpinnerGif />
                     }
                     Get Started
                   </Button> 
                 </div>
               )}
+              {error &&
+              <p>{error}</p>
+              }
             </CardFooter>
           </Card>
         </form>
