@@ -27,7 +27,11 @@ const OtpPage = () => {
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
-    }); 
+    });
+    
+    const { handleSubmit } = useForm<z.infer<typeof LoginSchema>>({
+        resolver: zodResolver(LoginSchema),
+      })
 
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
         console.log(values)
@@ -104,7 +108,7 @@ const OtpPage = () => {
                                     )}
                                 />
 
-                                <Button type="button" size="sm" className="submit-button" onClick={onSubmit}>
+                                <Button type="button" size="sm" className="submit-button" onClick={handleSubmit(onSubmit)}>
                                     Sign In
                                 </Button>
                                 

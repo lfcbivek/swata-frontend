@@ -50,7 +50,7 @@ const OtpPage = () => {
                         </InputOTPGroup>
                     </InputOTP>
                     { error &&
-                        <span>OTP Verification Failed</span>
+                        <span className="text-red-500">OTP Verification Failed</span>
                     }
                 </CardContent>
 

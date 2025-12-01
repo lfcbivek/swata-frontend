@@ -1,0 +1,1 @@
+import{j as t}from"./index-B6xnBCbX.js";const e=({children:s})=>t.jsxs("div",{className:"GetStarted",children:[t.jsx("img",{src:"/swata.svg",alt:"swata",className:"top-left-image"}),s]});export{e as G};
