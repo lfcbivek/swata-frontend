@@ -1,7 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
-import { AuthProvider, useAuth } from "@/context/AuthContext"
 import { router } from '@/router'
 
 
@@ -11,16 +10,14 @@ import './styles/main.scss';
 
 
 const App = () => {
-  const auth = useAuth()
-  return <RouterProvider router={router} context={{ auth }} />
+  const tenantSlug = window.location.hostname.split('.')[0]
+  return <RouterProvider router={router} context={{ tenantSlug }} />
 }
 
 const rootElement = document.getElementById('root')!
 const root = createRoot(rootElement)
 root.render(
   <StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <App />
   </StrictMode>,
 )

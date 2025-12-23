@@ -8,26 +8,34 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { DEFAULT_SETTINGS } from "./constants"
 
 export function RequirementsPopup(props:any) {
     const {
         open,
-        onOpenChange,
         children,
-        handleSettingsChange
+        handleWidgetSettingsChange,
+        widgetId,
+        currentSettings,
+        requirementsDefinitions,
+        handleWidgetSettingsClose
     } = props;
 
-    const [settings, setSettings] = useState(DEFAULT_SETTINGS.INPUT_TEXT);
-
-    const handleSettingChange = (idx: number, value: string | boolean) => {
+    const onSettingsChange = (key: string, value: string | boolean) => {
+        console.log("hereee")
         // Update the settings
-        const newSettings = settings.map((s, i) => (i === idx ? { ...s, value } : s))
-        setSettings(newSettings);
-        handleSettingsChange(newSettings);
+        const newSettings = {
+            ...currentSettings,
+            [key]: value
+        }
+        handleWidgetSettingsChange(widgetId, newSettings);
     };
+
+    const onSettingsSave = () => {
+        handleWidgetSettingsClose(widgetId, false);
+    }
     return (
-        <Popover open={open} onOpenChange={onOpenChange}>
+        <div onClick={(e) => e.stopPropagation()}>
+        <Popover open={open}>
             <PopoverTrigger asChild>
                 {/* Invisible trigger to satisfy Radix requirement */}
                 <PopoverTrigger asChild>
@@ -43,23 +51,23 @@ export function RequirementsPopup(props:any) {
                         </p>
                     </div>
                     <div className="grid gap-2">
-                        {settings.map((setting, idx) => (
+                        {requirementsDefinitions.map((definition, idx) => (
                             <div key={idx} className="grid grid-cols-3 items-center gap-4">
-                                <Label htmlFor={`setting-${idx}`}>{setting.label}</Label>
+                                <Label htmlFor={`setting-${idx}`}>{definition.label}</Label>
 
-                                {setting.inputType === "input-text" && (
+                                {definition.inputType === "input-text" && (
                                     <Input
                                         id={`setting-${idx}`}
-                                        value={String(setting.value)}
+                                        value={String(currentSettings[definition.key])}
                                         className="col-span-2 h-6"
-                                        onChange={(e) => handleSettingChange(idx, e.target.value)}
+                                        onChange={(e) => onSettingsChange(definition.key, e.target.value)}
                                     />
                                 )}
                                 {
-                                    setting.inputType === "checkbox" && (
+                                    definition.inputType === "checkbox" && (
                                         <Checkbox
-                                            checked={!!setting.value}
-                                            onCheckedChange={(checked)=> handleSettingChange(idx, checked)}
+                                            checked={!!currentSettings[definition.key]}
+                                            onCheckedChange={(checked)=> onSettingsChange(definition.key, checked)}
                                         />
                                     )
                                 }
@@ -69,6 +77,7 @@ export function RequirementsPopup(props:any) {
                             <Button 
                                 size="sm"
                                 className="w-fit bg-[#1A2A4F] hover:bg-[#1D546C] text-white"
+                                onClick={onSettingsSave}
                             >
                                 Save
                             </Button>
@@ -77,5 +86,6 @@ export function RequirementsPopup(props:any) {
                 </div>
             </PopoverContent>
         </Popover>
+        </div>
     )
 }

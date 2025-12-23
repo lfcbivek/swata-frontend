@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useRef } from 'react';
 import {DndContext} from '@dnd-kit/core';
 
 import { Droppable } from '@/components/WebForms/Droppable';
@@ -8,7 +8,8 @@ import { DEFAULT_BACKGROUND_COLOR,
   DEFAULT_FORM_FOREGROUND_COLOR,
   DEFAULT_LABEL_COLOR,
   DEFAULT_WIDGET_COLOR,
-  inputTextSettingsMap 
+  mapWidgetDefaultSettings,
+  mapWidgetRequirementsDefinitions
 } from './constants';
 
 import './WebFormDashboard.scss';
@@ -18,6 +19,7 @@ export const WebFormDashboard = () => {
   const [draggedWidgets, setDraggedWidgets] = useState<any>([]);
   const [droppedWidgets, setDroppedWidgets] = useState<any>([]);
   const [isMobile, setIsMobile] = useState(false);
+  const widgetCounterRef = useRef<number>(0);
   const [colors, setColors] = useState({
     formBackgroundColor: DEFAULT_BACKGROUND_COLOR,
     formForegroundColor: DEFAULT_FORM_FOREGROUND_COLOR,
@@ -42,12 +44,24 @@ export const WebFormDashboard = () => {
     setIsMobile(mobile);
   }
 
-  const onWidgetSettingsChange = (newSettings:any) => {
-    // Map widget setting into the format understood by the popup
-    const widgetSettings = Object.fromEntries(
-      newSettings.map((s:any) => [s.key, s.value])
+  const onWidgetSettingsChange = (widgetId:string, widgetSettings:any) => {
+    setDroppedWidgets((prev: any[]) =>
+      prev.map((widget) =>
+        widget.widgetId === widgetId
+          ? { ...widget, widgetSettings }
+          : widget
+      )
     );
-    setWidgetSettings(widgetSettings)
+  }
+
+  const onPopupChange = (widgetId:string, open:boolean) => {
+    setDroppedWidgets((prev: any[]) =>
+      prev.map((widget) =>
+        widget.widgetId === widgetId
+          ? { ...widget, showWidgetSettings: open}
+          : widget
+      )
+    );
   }
 
   return (
@@ -67,6 +81,7 @@ export const WebFormDashboard = () => {
                   <Droppable  
                     droppedWidgets={droppedWidgets}
                     handleWidgetSettingsChange={onWidgetSettingsChange}
+                    handlePopupChange={onPopupChange}
                     widgetSettings={widgetSettings}
                     formForegroundColor={colors.formForegroundColor}
                     formLabelColor={colors.formLabelColor}
@@ -94,7 +109,9 @@ export const WebFormDashboard = () => {
 
   function handleDragEnd(event:any) {
     const {active, over} = event;
+    const widgetTypeId = active.id;
 
+    const widgetId = `${widgetTypeId}-${widgetCounterRef.current++}`;
     if (!active || !over) return;
     // If the item is dropped over a container, set it as the parent
     // otherwise reset the parent to `null`
@@ -104,8 +121,10 @@ export const WebFormDashboard = () => {
       { 
         ...active,
         // When the widgets are first dragged, this makes sure that the users are able to change the settings
-        hasRequirements: true,
-        widgetSettings: inputTextSettingsMap
+        widgetId: widgetId,
+        widgetSettings: mapWidgetDefaultSettings[active.id],
+        requirementsDefinitions: mapWidgetRequirementsDefinitions[active.id],
+        showWidgetSettings: true
       }
     ]
     );

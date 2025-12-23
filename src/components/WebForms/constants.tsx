@@ -98,7 +98,38 @@ export const DEFAULT_SETTINGS = {
             value: "",
             inputType: "input-text"
         },
-
+    ],
+    INPUT_PASSWORD: [
+        {
+            key: "required",
+            label: "Required",
+            value: true,
+            inputType: "checkbox"
+        },
+        {
+            key: "maxLength",
+            label: "Max Length",
+            value: 100,
+            inputType: "input-text",
+        },
+        {
+            key: "label",
+            label: "Form Label",
+            value: DEFAULT_WIDGET_LABELS.INPUT_EMAIL,
+            inputType: "input-text"
+        },
+        {
+            key: "disabled",
+            label: "Disabled",
+            value: false,
+            inputType: "checkbox"
+        },
+        {
+            key: "disabledValue",
+            label: "Disabled Value",
+            value: "",
+            inputType: "input-text"
+        },    
     ]
 }
 
@@ -106,6 +137,21 @@ const inputTextSettings = DEFAULT_SETTINGS.INPUT_TEXT;
 export const inputTextSettingsMap = Object.fromEntries(
     inputTextSettings.map(s => [s.key, s.value])
 );
+
+const inputEmailSettings = DEFAULT_SETTINGS.INPUT_EMAIL;
+export const inputEmailSettingsMap = Object.fromEntries(
+    inputEmailSettings.map(s => [s.key, s.value])
+);
+
+export const mapWidgetDefaultSettings = {
+    "input-text-widget": inputTextSettingsMap,
+    "input-email-widget": inputEmailSettingsMap
+}
+
+export const mapWidgetRequirementsDefinitions = {
+    "input-text-widget": inputTextSettings,
+    "input-email-widget": inputEmailSettings
+}
 
 export const AVAILABLE_FORM_WIDGETS = [
     {

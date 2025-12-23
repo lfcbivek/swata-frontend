@@ -12,8 +12,6 @@ const InputText = (props:any) => {
         style,
         labelColor
     } = props;
-    console.log("label color")
-    console.log(labelColor)
 
     return (
         <div className="flex flex-col gap-2">

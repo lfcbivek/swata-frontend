@@ -24,6 +24,7 @@ const ContentScreen = (props:any) => {
     formForegroundColor,
     formLabelColor,
     widgetColor,
+    handlePopupChange
   } = props;
 
   const {isOver, setNodeRef} = useDroppable({
@@ -33,9 +34,16 @@ const ContentScreen = (props:any) => {
   const [isRequirementPopUpOpen, setIsRequirementPopUpOpen] = useState(true);
   
   
-  const onOpenChange = () => {
-    setIsRequirementPopUpOpen(!isRequirementPopUpOpen);
+  const onOpenChange = (widget) => {
+    // Update the settings
+    const newSettings = {
+      ...widget,
+      showWidgetSettings: !widget.showWidgetSettings
   }
+    handleWidgetSettingsChange(widget.widgetId, newSettings);
+  }
+  
+  
   return(
     <Card ref={setNodeRef} className='DroppableArea' style={{backgroundColor: formForegroundColor}}>
       <CardTitle className='text-center text-3xl header-section'>
@@ -49,18 +57,27 @@ const ContentScreen = (props:any) => {
               const widget = AVAILABLE_FORM_WIDGETS.find(
                 (w) => w.id === droppedWidget.id
               );
-              const hasRequirements = droppedWidget.hasRequirements;
+              const showWidgetSettings = droppedWidget.showWidgetSettings;
               if(!widget) return null;
               return (
-                <div key={widget.id} onClick={() => hasRequirements && setIsRequirementPopUpOpen(true)} className={`${hasRequirements ? 'border-2 border-red-500 p-2' : ''} cursor-pointer`}>
-                  {hasRequirements ? (
+                <div 
+                  key={widget.widgetId}  
+                  className={`${showWidgetSettings ? 'border-2 border-red-500 p-2' : ''} cursor-pointer hover:border-2 hover:border-red-500 hover:p-2`}
+                  onClick={() => handlePopupChange(droppedWidget.widgetId, !showWidgetSettings)}
+                >
+                  {showWidgetSettings ? (
                     <RequirementsPopup
                       open={isRequirementPopUpOpen}
-                      onOpenChange={onOpenChange}
-                      handleSettingsChange={handleWidgetSettingsChange}
+                      onOpenChange={() => onOpenChange(droppedWidget)}
+                      handleWidgetSettingsChange={handleWidgetSettingsChange}
+                      handleWidgetSettingsClose={handlePopupChange}
+                      widgetId={droppedWidget.widgetId}
+                      currentSettings={droppedWidget.widgetSettings}
+                      requirementsDefinitions={droppedWidget.requirementsDefinitions}
                     >
-                      {/* This is now the popover trigger anchor — but doesn't handle opening */}
-                      <div onClick={onOpenChange}>
+                      <div
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         { typeof widget.droppableUI === "function" && widget.droppableUI(widgetSettings ?? droppedWidget.widgetSettings, formLabelColor, widgetColor)}
                       </div>
                     </RequirementsPopup>

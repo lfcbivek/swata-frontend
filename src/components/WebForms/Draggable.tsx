@@ -70,16 +70,6 @@ export function Draggable(props:any) {
           >
             Styles
           </TabsTrigger>
-          <TabsTrigger 
-            value="hhh"
-            className="
-              data-[state=active]:bg-[#658C58]
-              data-[state=active]:text-white 
-              px-4 py-2
-            "
-          >
-            HHHH
-          </TabsTrigger>
         </TabsList>
         <div className='tab-contents'>
           <TabsContent value="widgets">

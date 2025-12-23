@@ -1,12 +1,12 @@
 import {
-  createRootRouteWithContext,
+  createRootRoute,
   redirect,
   Outlet,
   useMatches,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import AppLayout from '@/common/AppLayout'
-import type { AuthContextType } from '@/context/AuthContext'
+import { authStore } from '@/store/authStore'
 
 const Root = () => {
   const matches = useMatches()
@@ -22,17 +22,37 @@ const Root = () => {
   )
 }
 
-export const Route = createRootRouteWithContext<{ auth: AuthContextType }>()({
+export const Route = createRootRoute({
   component: Root,
 
-  beforeLoad: ({ context, location }) => {
-    const isLoggedIn = context.auth.isAuthenticated
+  beforeLoad: () => {
+    const { token ,user } = authStore.getState();
+    const isLoggedIn = token ? true : false;
     const path = location.pathname
-
-    const publicRoutes = ['/login', '/get-started', '/verify-otpge']
-
-    if (!isLoggedIn && !publicRoutes.includes(path)) {
-      throw redirect({ to: '/login' })
+    const publicRoutes = ['/login', '/get-started', '/verify-otp']
+    const currentTenantSlug = window.location.hostname.split('.')[0]
+    if (!isLoggedIn) {
+      if (!publicRoutes.includes(path)) {
+        throw redirect({ to: '/login' })
+      }
+      return
     }
+
+    const userTenant = user?.tenant?.slug
+    if (!userTenant) return
+    const isDev = import.meta.env.VITE_APP_ENVIRONMENT;
+    const dashboardUrl = isDev ? `http://${userTenant}.swata.localhost/dashboard` : `https://${userTenant}.swata.com/dashboard`;
+    //Logged in but on wrong tenant, redirect to correct one
+    // if (tenantSlug && tenantSlug !== userTenant) {
+    //   window.location.href = dashboardUrl;
+    //   return
+    // }
+
+    // //Logged in and on app domain, redirect
+    // const isOnAppDomain = tenantSlug === null
+    // if (isOnAppDomain) {
+    //   window.location.href = dashboardUrl;
+    //   return
+    // }
   },
 })

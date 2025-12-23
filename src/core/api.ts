@@ -2,9 +2,11 @@ import {
     BACKEND_BASE_URL, 
     SUB_DOMAIN_URL,
     SIGN_UP_URL,
-    VERIFY_OTP_URL
+    VERIFY_OTP_URL,
+    LOGIN_URL
 } from "@/core/urls";
 import { SignUpType } from "@/schemas/SignUpSchema";
+import { LoginType } from "@/schemas/LoginSchema";
 import { api } from "./apiClient";
 
 export const checkSubDomainAvailability = async (subDomain: string) => {
@@ -36,4 +38,13 @@ export const verifyOtp = async(userId:string, otp: string) => {
     }
     return api.post(url, payload);
 
+}
+
+export const loginApi = async(data: LoginType) => {
+    const url = BACKEND_BASE_URL+LOGIN_URL;
+    const payload = {
+        email: data.email,
+        password: data.password
+    }
+    return api.post(url, payload);
 }

@@ -6,6 +6,7 @@ import type { AuthContextType } from '@/context/AuthContext'
 declare module '@tanstack/react-router' {
   interface RouterContext {
     auth: AuthContextType
+    tenantSlug?: string | null
   }
 }
 
@@ -14,5 +15,6 @@ export const router = createRouter({
   routeTree,
   context: {
     auth: undefined!, // Will be injected in main.tsx
+    tenantSlug: undefined
   },
 })

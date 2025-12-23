@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input"
 import {
     Form,
@@ -19,28 +19,48 @@ import { LoginSchema } from "@/schemas/LoginSchema"
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import { Link } from "@tanstack/react-router";
+import {
+    loginApi
+} from "@/core/api";
 import "./LoginForm.scss";
+import { useAuthStore } from "@/store/authStore";
 
-const OtpPage = () => {
+const LoginForm = () => {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const { setToken, setUser } = useAuthStore();
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
+        defaultValues: {
+            email: "",
+            password: ""
+        }
     });
     
-    const { handleSubmit } = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
-      })
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-        console.log(values)
+    const onSubmit = async(values: z.infer<typeof LoginSchema>) => {
+        const loginResponse = await loginApi(values);
+        if(!loginResponse.success) {
+            console.log("Invalid credentials")
+            return;
+        }
+        const data = loginResponse.data;
+        setToken(data.access)
+        setUser(data.user)
+        console.log(`http://${data.user.tenant.slug}.swata.localhost/dashboard`)
+        //temp redirect to dashboard
+        window.location.href = `http://${data.user.tenant.slug}.swata.localhost/dashboard`;
     }
     return (
         <GetStartedLayout>
             <h1 id="tagline" className="text-white text-3xl md:text-4xl text-center mb-10 leading-tight">Automate. Convert. Grow.</h1>
             <div className="LoginForm">
                 <Form {...form} >
+                <form 
+                    onSubmit={form.handleSubmit(onSubmit)} 
+                    className="space-y-8"
+                >
                     
                 <Card className="login-card">
                     <CardTitle className="flex flex-col gap-2 px-6 text-lg">
@@ -59,11 +79,7 @@ const OtpPage = () => {
                             <div className="flex-1 border-t border-gray-700"></div>
                         </div>
 
-                        <div className="login-content">
-                            <form 
-                                onSubmit={form.handleSubmit(onSubmit)} 
-                                className="space-y-6"
-                            >
+                        <div className="login-content space-y-6">
                                 {/* Email */}
                                 <FormField
                                     control={form.control}
@@ -108,16 +124,15 @@ const OtpPage = () => {
                                     )}
                                 />
 
-                                <Button type="button" size="sm" className="submit-button" onClick={handleSubmit(onSubmit)}>
+                                <Button type="submit" size="sm" className="submit-button">
                                     Sign In
                                 </Button>
                                 
-                            </form>
                         </div>
                         <p className="text-gray-400 md:text-base text-center mt-4">Don't have account? <Link to='/get-started' className="text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200">Sign Up</Link></p>
                     </CardContent>
                 </Card>
-
+                </form>
                 </Form>
             </div>
             
@@ -125,4 +140,4 @@ const OtpPage = () => {
       );
 };
 
-export default OtpPage;
+export default LoginForm;
